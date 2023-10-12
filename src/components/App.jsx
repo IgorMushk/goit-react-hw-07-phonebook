@@ -27,7 +27,7 @@ export function App() {
       {isLoading && <Loader/>}
       <FilterByName />
       {error ?  <h2>Oops... something went wrong. Please reload the page</h2> :  <ContactList />} 
-      <ToastContainer autoClose={2000} />
+      <ToastContainer autoClose={2000} theme="colored" />
     </Container>
   );
 }
