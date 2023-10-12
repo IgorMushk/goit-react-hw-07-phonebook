@@ -1,8 +1,8 @@
-import { Button, Item, ItemText, List } from "./ContactList.styled.";
+import { Button, Item, ItemText, List, Quantitas } from "./ContactList.styled.";
 import { useDispatch, useSelector } from 'react-redux';
 //import { delClient } from "redux/store";
-import { delClient } from "redux/contactsSlice";
-import { getContacts, getFilterValue } from "redux/selectors";
+import { deleteContact } from "redux/operations";
+import { getContacts, getFilterValue, getIsLoading } from "redux/selectors";
 
 export const ContactList = ({onDeleteContact}) => {
   const contacts  = useSelector(getContacts)
@@ -10,6 +10,7 @@ export const ContactList = ({onDeleteContact}) => {
   const dispatch = useDispatch();
   const filterValue = useSelector(getFilterValue);
   //console.log('ContactList-filter :>>', filterValue);
+  const isLoading = useSelector(getIsLoading)
 
   const getFilteredContats = () => {
     const filteredContats = contacts.filter(contact =>
@@ -18,13 +19,18 @@ export const ContactList = ({onDeleteContact}) => {
     return filteredContats;
   };
 
+  const quantitas = getFilteredContats().length;
+
  return  (
+  <>
 <List>
-{getFilteredContats().map(({id, name, number}) => (
+{getFilteredContats().map(({id, name, phone}) => (
 <Item key={id}>
-    <ItemText>{name}: {number} </ItemText>
-    <Button onClick={() => dispatch(delClient(id))}>Delite</Button> </Item>
+    <ItemText><span>{name} : </span><span>{phone}</span> </ItemText>
+    <Button onClick={() => dispatch(deleteContact(id))}>Delete</Button> </Item>
     ))}
 </List>
+<Quantitas>Number of contacts: { isLoading ? '...' : quantitas }</Quantitas>
+</>
 )};//
 

@@ -1,8 +1,9 @@
 import { nanoid } from 'nanoid';
 import { Button, Form, Inpute, Label } from './ContactForm.Styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { addClient } from 'redux/contactsSlice';
+import { addContact } from 'redux/operations';
 import { getContacts } from 'redux/selectors';
+
 
 export function ContactForm() {
   const dispatch = useDispatch();
@@ -22,9 +23,9 @@ export function ContactForm() {
     const newContact ={
         id: nanoid(),
         name: form.name.value,
-        number: form.number.value
+        phone: form.number.value
     }
-    dispatch(addClient(newContact));
+    dispatch(addContact(newContact));
     form.reset();
 };
 

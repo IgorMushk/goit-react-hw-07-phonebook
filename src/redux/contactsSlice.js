@@ -1,22 +1,58 @@
-import contacts from '../data/contacts.json';
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchContacts, addContact, deleteContact } from './operations';
+import { toast } from 'react-toastify';
 
 const contactsSlice = createSlice({
-    name: 'clients',
-    initialState: {contactsList: [...contacts]},
-    reducers:{
-      addClient(state,action) {
-        state.contactsList.push(action.payload)
+    name: "contacts",
+    initialState: {
+      items: [],
+      isLoading: false,
+      error: null,
+    },
+    extraReducers: {
+      [fetchContacts.pending](state) {
+        state.isLoading = true;
       },
-      delClient(state,action) {
-        //return state.contactsList.filter(contact => contact.id !== action.payload) - error!
-        //state.contactsList = state.contactsList.filter(contact => contact.id !== action.payload) ok!
-        const index = state.contactsList.findIndex(contact => contact.id === action.payload);
-        state.contactsList.splice(index, 1);  
+      [fetchContacts.fulfilled](state, action) {
+        state.isLoading = false;
+        state.error = null;
+        state.items = action.payload;
       },
-    }
-  })
-  //console.log('contactsSlice >>', contactsSlice);
-
-  export const {addClient, delClient } = contactsSlice.actions;
-  export const contactReducer = contactsSlice.reducer
+      [fetchContacts.rejected](state, action) {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+      [addContact.pending](state) {
+        state.isLoading = true;
+      },
+      [addContact.fulfilled](state, action) {
+        state.isLoading = false;
+        state.error = null;
+        state.items.push(action.payload);
+        toast.success('Contact added!');
+      },
+      [addContact.rejected](state, action) {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+      [deleteContact.pending](state) {
+        state.isLoading = true;
+      },
+      [deleteContact.fulfilled](state, action) {
+        state.isLoading = false;
+        state.error = null;
+        const index = state.items.findIndex(
+            contact => contact.id === action.payload.id
+        );
+        state.items.splice(index, 1);
+        toast.info('Contact has been deleted!');
+      },
+      [deleteContact.rejected](state, action) {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+  
+    },
+  });
+  
+  export const contactsReducer = contactsSlice.reducer;
