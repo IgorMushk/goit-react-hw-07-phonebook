@@ -30,7 +30,7 @@ export const ContactList = ({onDeleteContact}) => {
     <Button onClick={() => dispatch(deleteContact(id))}>Delete</Button> </Item>
     ))}
 </List>
-<Quantitas>Number of contacts: { isLoading ? '...' : quantitas }</Quantitas>
+<Quantitas>Number of contacts: { isLoading ? <span>...</span> : <span>{quantitas}</span> }</Quantitas>
 </>
 )};//
 

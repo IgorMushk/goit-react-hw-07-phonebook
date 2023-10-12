@@ -44,4 +44,7 @@ export const Quantitas = styled.div`
   bottom: 0;
   left: 50% - 20px;
   font-size: 16px;
+  span {
+    font-weight: 600;
+  };
 `;
