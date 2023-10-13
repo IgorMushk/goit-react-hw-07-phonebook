@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 //import { delClient } from "redux/store";
 import { deleteContact } from "redux/operations";
 import { getContacts, getFilterValue, getIsLoading } from "redux/selectors";
+import { RotatingLines } from 'react-loader-spinner';
 
 export const ContactList = ({onDeleteContact}) => {
   const contacts  = useSelector(getContacts)
@@ -30,7 +31,20 @@ export const ContactList = ({onDeleteContact}) => {
     <Button onClick={() => dispatch(deleteContact(id))}>Delete</Button> </Item>
     ))}
 </List>
-<Quantitas>Number of contacts: { isLoading ? <span>...</span> : <span>{quantitas}</span> }</Quantitas>
+<Quantitas>
+        Number of contacts:
+        {isLoading ? (
+          <RotatingLines
+            strokeColor="grey"
+            strokeWidth="5"
+            animationDuration="0.75"
+            width="18"
+            visible={true}
+          />
+        ) : (
+          <span>{quantitas}</span>
+        )}
+      </Quantitas>
 </>
 )};//
 
