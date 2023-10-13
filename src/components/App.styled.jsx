@@ -7,7 +7,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   align-items: left;
-  font-size: 40px;
+  //font-size: 40px;
   color: #010101;
   background-color: #e7ecf2;
   padding-left: 10px;
