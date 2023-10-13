@@ -9,6 +9,8 @@ import { Loader } from './Loader/Loader';
 import { getError, getIsLoading } from 'redux/selectors';
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import ScrollToTop from 'react-scroll-to-top';
+import { AiOutlineArrowUp } from "react-icons/ai";
 
 export function App() {
   const dispatch = useDispatch();
@@ -21,6 +23,7 @@ export function App() {
 
   return (
     <Container>
+      <ScrollToTop smooth style={{borderRadius: "50%"}} component={<p style={{ color: "gray", margin: "auto", borderRadius: "50%" }}><AiOutlineArrowUp size={24} /></p>} />
       <Title>Phonebook</Title>
       <ContactForm />
       <TitleList>Contact</TitleList>
